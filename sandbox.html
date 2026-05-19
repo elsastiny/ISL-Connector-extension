@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.8/vision_bundle.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <script>
+    let handLandmarker;
+
+    async function initMediaPipe() {
+      try {
+        const vision = await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.8/wasm"
+        );
+        handLandmarker = await HandLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"
+          },
+          runningMode: "VIDEO",
+          numHands: 2,
+          modelComplexity: 0
+        });
+        window.parent.postMessage({ type: "TRACKER_READY" }, "*");
+      } catch (err) {
+        console.error("Sandbox MediaPipe Setup Error: ", err);
+      }
+    }
+
+    window.addEventListener("message", (event) => {
+      if (event.data.type === "PROCESS_FRAME" && handLandmarker) {
+        const { width, height, buffer } = event.data;
+        
+        // Reconstruct the raw pixel array inside the sandbox safely
+        const uint8ClampedArray = new Uint8ClampedArray(buffer);
+        const imageData = new ImageData(uint8ClampedArray, width, height);
+        
+        // Render raw image assets natively using modern browser ImageBitmaps
+        createImageBitmap(imageData).then((bitmap) => {
+          const results = handLandmarker.detect(bitmap);
+          if (results.landmarks && results.landmarks.length > 0) {
+            window.parent.postMessage({
+              type: "COORDINATES",
+              data: results.landmarks[0][0] // Send Point 0 (Wrist Joint Coordinates)
+            }, "*");
+          }
+        }).catch(err => console.error("Bitmap parsing failure: ", err));
+      }
+    });
+
+    initMediaPipe();
+  </script>
+</body>
+</html>

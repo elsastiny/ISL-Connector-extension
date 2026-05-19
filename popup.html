@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { width: 200px; padding: 10px; font-family: Arial, sans-serif; }
+    select, button { width: 100%; margin-top: 8px; padding: 5px; }
+  </style>
+</head>
+<body>
+  <h3>ISL-Connect</h3>
+  <label>I am:</label>
+  <select id="role">
+    <option value="deaf">Deaf/Mute User</option>
+    <option value="hearing">Hearing User</option>
+  </select>
+  
+  <label>Preferred Language:</label>
+  <select id="lang">
+    <option value="ml">Malayalam</option>
+    <option value="ta">Tamil</option>
+    <option value="en">English</option>
+  </select>
+  
+  <button id="startBtn">Connect to Call</button>
+  <script src="popup.js"></script>
+</body>
+</html>

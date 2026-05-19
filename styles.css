@@ -1,0 +1,21 @@
+/* Styling for the custom subtitle overlay */
+#isl-subtitle-box {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #f1c40f; /* High-contrast yellow */
+  font-size: 32px;
+  font-weight: bold;
+  padding: 15px 30px;
+  border-radius: 10px;
+  border: 2px solid #f1c40f;
+  z-index: 2147483647; /* Forces it to stay on top of everything else */
+  pointer-events: none; /* Allows you to click 'through' the box if it blocks a button */
+  text-shadow: 2px 2px 4px #000000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  min-width: 50%;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+}
