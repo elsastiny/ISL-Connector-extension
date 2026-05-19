@@ -56,4 +56,4 @@ async def websocket_endpoint(websocket: WebSocket):
 
 if __name__ == "__main__":
     # Run the server on your local network so the i3 laptop can connect to it
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+     uvicorn.run(app, host="0.0.0.0", port=8000)
