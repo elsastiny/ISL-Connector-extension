@@ -1,17 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "ISL-Sync Overlay",
-  "version": "1.0",
-  "description": "Two-way Indian Sign Language overlay tool.",
-  "permissions": ["activeTab", "scripting", "storage"],
-  "action": { 
-    "default_popup": "popup.html" 
+  "name": "ISL-Connect SidePanel",
+  "version": "1.1",
+  "description": "Two-way Indian Sign Language overlay side panel tool.",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_title": "Open ISL-Connect"
   },
- "content_scripts": [
-    {
-      "matches": ["https://meet.google.com/*", "https://*.zoom.us/*"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
-    }
-  ]
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  }
 }
